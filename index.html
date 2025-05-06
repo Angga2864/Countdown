@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BACK HOME COUNTDOWN</title>
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --electric-blue: #00ffff;
+            --lime-green: #00ff00;
+            --violet-purple: #9900ff;
+            --sun-yellow: #ffff00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Black', 'Arial Bold', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--violet-purple) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, var(--electric-blue) 0%, transparent 25%),
+                radial-gradient(circle at 50% 10%, var(--neon-pink) 0%, transparent 20%);
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--neon-pink);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 
+                0 0 20px var(--neon-pink),
+                0 0 40px var(--electric-blue),
+                0 0 60px var(--violet-purple);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed var(--lime-green);
+            border-radius: 25px;
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        h1 {
+            color: var(--sun-yellow);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-shadow: 
+                0 0 10px var(--sun-yellow),
+                0 0 20px var(--neon-pink);
+            letter-spacing: 2px;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .countdown-item {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--electric-blue);
+            border-radius: 15px;
+            padding: 15px 5px;
+            box-shadow: 0 0 15px var(--electric-blue);
+        }
+        
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            margin-bottom: 5px;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--lime-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .target-date {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--electric-blue);
+            text-shadow: 0 0 5px var(--electric-blue);
+        }
+        
+        .emoji {
+            font-size: 2rem;
+            animation: bounce 1s infinite alternate;
+            display: inline-block;
+        }
+        
+        .glitch {
+            animation: glitch 1s linear infinite;
+        }
+
+        .music-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--electric-blue);
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 10px var(--neon-pink);
+    z-index: 100;
+}
+
+.music-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.music-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 5px;
+    -webkit-appearance:none;
+    background: linear-gradient(to right, var(--neon-pink), var(--electric-blue));
+    border-radius: 5px;
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--electric-blue); }
+            25% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--electric-blue); }
+            50% { text-shadow: 2px 0 var(--violet-purple), -2px 0 var(--lime-green); }
+            75% { text-shadow: -2px 0 var(--violet-purple), 2px 0 var(--lime-green); }
+            100% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--electric-blue); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 10px 5px;
+            }
+            
+            .countdown-value {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        .footer {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--electric-blue);
+    text-shadow: 0 0 5px var(--electric-blue);
+    padding: 10px;
+    z-index: 99;
+    animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px var(--electric-blue);
+    }
+    20%, 24%, 55% {
+        opacity: 0.5;
+        text-shadow: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch">BACK TO JOGJA <span class="emoji">🐣</span></h1>
+        
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-value" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+        
+        <div class="target-date">
+            Countdown Menuju Tanah Jawa <span class="emoji">⏱️</span>
+        </div>
+
+        <!-- Tambahkan ini di bagian bawah body (sebelum penutup </body>) -->
+<audio id="bgMusic" loop>
+    <source src="nama_file_lagu.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+</audio>
+
+<div class="music-controls">
+    <button class="music-toggle" onclick="toggleMusic()">🔈</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" oninput="setVolume(this.value)">
+</div>
+
+<footer class="footer">
+    &copy; angga.2864 2025 | All Rights Reserved
+</footer>
+
+    <script>
+        // Set the target date (June 13, 2025)
+        const targetDate = new Date('June 13, 2025 00:00:00').getTime();
+        
+        // Update the countdown every second
+        const countdown = setInterval(function() {
+            // Get current date and time
+            const now = new Date().getTime();
+            
+            // Calculate the remaining time
+            const distance = targetDate - now;
+            
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = Math.floor(hours).toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
+            
+            // If the countdown is finished
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('days').innerHTML = '00';
+                document.getElementById('hours').innerHTML = '00';
+                document.getElementById('minutes').innerHTML = '00';
+                document.getElementById('seconds').innerHTML = '00';
+                
+                // Change the title and add celebration effect
+                document.querySelector('h1').innerHTML = 'WE MADE IT GENG! <span class="emoji">🎉</span>';
+                document.querySelector('.target-date').innerHTML = 'June 13, 2025 has arrived!';
+                
+                // Add celebration styles
+                document.body.style.backgroundImage = 
+                    'radial-gradient(circle at center, var(--neon-pink) 0%, var(--violet-purple) 100%)';
+                document.querySelector('.container').style.boxShadow = 
+                    '0 0 50px var(--sun-yellow), 0 0 100px var(--lime-green)';
+            }
+        }, 1000);
+        
+        // Add some random glitch effects to elements occasionally
+        setInterval(function() {
+            const elements = document.querySelectorAll('.glitch');
+            elements.forEach(el => {
+                if (Math.random() > 0.7) {
+                    el.style.animation = 'none';
+                    void el.offsetWidth; // Trigger reflow
+                    el.style.animation = 'glitch 0.3s linear';
+                }
+            });
+        }, 2000);
+        
+        const bgMusic = document.getElementById('bgMusic');
+let isMusicPlaying = false;
+
+// Set volume awal
+bgMusic.volume = 0.5;
+
+function toggleMusic() {
+    const musicToggle = document.querySelector('.music-toggle');
+    if (isMusicPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = '🔈';
+    } else {
+        bgMusic.play()
+            .then(() => {
+                musicToggle.textContent = '🔊';
+                isMusicPlaying = true;
+            })
+            .catch(error => {
+                console.error("Autoplay prevented:", error);
+                // Tampilkan pesan atau instruksi ke pengguna
+                alert("Silakan klik tombol play untuk memulai musik. Beberapa browser memerlukan interaksi pengguna terlebih dahulu.");
+            });
+    }
+    isMusicPlaying = !isMusicPlaying;
+}
+
+function setVolume(volume) {
+    bgMusic.volume = volume;
+    
+    // Update ikon berdasarkan volume
+    const musicToggle = document.querySelector('.music-toggle');
+    if (volume == 0) {
+        musicToggle.textContent = '🔇';
+    } else if (volume < 0.5) {
+        musicToggle.textContent = '🔉';
+    } else {
+        musicToggle.textContent = '🔊';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Coba autoplay dengan volume rendah
+    bgMusic.volume = 0.1;
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            // Autoplay dicegah, biarkan pengguna memulai manual
+            console.log("Autoplay prevented, waiting for user interaction");
+            bgMusic.volume = 0.5; // Kembalikan volume normal
+        });
+    }
+});
+    </script>
+</body>
+</html>
